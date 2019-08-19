@@ -22,7 +22,8 @@ namespace aProtect
         public string callAPI(string codeLicence, string email, string password)
         {
             string dataJSON;
-            WebRequest request = WebRequest.Create("https://www.rpi-projet.pw/api/index.php?codeLicence=" + codeLicence + "&email=" + email + "&password=" + password);
+            string mac = getMACAdress();
+            WebRequest request = WebRequest.Create("https://www.rpi-projet.pw/api/index.php?codeLicence=" + codeLicence + "&email=" + email + "&password=" + password + "&biosNumber=" + mac);
             request.Credentials = CredentialCache.DefaultCredentials;
 
             WebResponse response = request.GetResponse();
