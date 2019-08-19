@@ -15,17 +15,13 @@ namespace aProtect
         static string user = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
         static string dir = "C:\\" + user;
         static string file = "aprotectKey.txt";
-        static string fullPath = Path.Combine(dir, file);
+        public static string fullPath = Path.Combine(dir, file);
 
         private object responseFromServer;
 
-        public string callAPI()
+        public string callAPI(string codeLicence, string email, string password)
         {
             string dataJSON;
-            string codeLicence = "NEQA-TWYG-TM5L-GSSH";
-            string email = "matthieu.baunac@limayrac.fr";
-            string password = "be5668cca19d2dba09f4affa583f800abd40f2fcd9ccc364f4215f0bb85c209b";
-
             WebRequest request = WebRequest.Create("https://www.rpi-projet.pw/api/index.php?codeLicence=" + codeLicence + "&email=" + email + "&password=" + password);
             request.Credentials = CredentialCache.DefaultCredentials;
 
@@ -52,6 +48,7 @@ namespace aProtect
                 string codeLicence = dataRead.ReadLine();
                 string dateExpiration = dataRead.ReadLine();
                 string typeLicence = dataRead.ReadLine();
+                dataRead.Close();
 
                 DateTime currentDate = DateTime.Now;
 
@@ -122,12 +119,6 @@ namespace aProtect
             File.WriteAllLines(fullPath, data);
         }
 
-
-        public StreamReader readFile()
-        {
-            StreamReader dataRead = new StreamReader(fullPath);
-            return dataRead;
-        }
 
         public static string getMACAdress()
         {
